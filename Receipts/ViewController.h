@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
+#import "AppDelegate.h"
 
 @interface ViewController : UIViewController
 
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
 

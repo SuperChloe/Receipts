@@ -7,6 +7,7 @@
 //
 
 #import "NewReceiptViewController.h"
+#import "AppDelegate.h"
 
 @interface NewReceiptViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *amountField;
@@ -30,6 +31,8 @@
 }
 
 - (IBAction)donePressed:(id)sender {
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
