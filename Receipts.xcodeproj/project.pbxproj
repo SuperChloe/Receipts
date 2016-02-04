@@ -14,6 +14,7 @@
 		89DA16841C63B79500133953 /* Receipts.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 89DA16821C63B79500133953 /* Receipts.xcdatamodeld */; };
 		89DA16861C63B79500133953 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89DA16851C63B79500133953 /* Assets.xcassets */; };
 		89DA16891C63B79500133953 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89DA16871C63B79500133953 /* LaunchScreen.storyboard */; };
+		89DA16921C63C27900133953 /* NewReceiptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DA16911C63C27900133953 /* NewReceiptViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,8 @@
 		89DA16851C63B79500133953 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		89DA16881C63B79500133953 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89DA168A1C63B79500133953 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		89DA16901C63C27900133953 /* NewReceiptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewReceiptViewController.h; sourceTree = "<group>"; };
+		89DA16911C63C27900133953 /* NewReceiptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewReceiptViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +67,8 @@
 				89DA167A1C63B79400133953 /* AppDelegate.m */,
 				89DA167C1C63B79400133953 /* ViewController.h */,
 				89DA167D1C63B79400133953 /* ViewController.m */,
+				89DA16901C63C27900133953 /* NewReceiptViewController.h */,
+				89DA16911C63C27900133953 /* NewReceiptViewController.m */,
 				89DA167F1C63B79500133953 /* Main.storyboard */,
 				89DA16851C63B79500133953 /* Assets.xcassets */,
 				89DA16871C63B79500133953 /* LaunchScreen.storyboard */,
@@ -155,6 +160,7 @@
 			files = (
 				89DA16841C63B79500133953 /* Receipts.xcdatamodeld in Sources */,
 				89DA167E1C63B79400133953 /* ViewController.m in Sources */,
+				89DA16921C63C27900133953 /* NewReceiptViewController.m in Sources */,
 				89DA167B1C63B79400133953 /* AppDelegate.m in Sources */,
 				89DA16781C63B79400133953 /* main.m in Sources */,
 			);
