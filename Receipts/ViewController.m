@@ -8,11 +8,14 @@
 
 #import "ViewController.h"
 #import "Receipt.h"
+#import "NewReceiptViewController.h"
+#import "ReceiptCell.h"
 
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *addReciptButton;
+@property (strong, nonatomic) NSArray *receiptsArray;
 
 @end
 
@@ -25,9 +28,11 @@
     
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.managedObjectContext = appDelegate.managedObjectContext;
+}
 
-    [self createReceipt];
-    
+- (void)viewWillAppear:(BOOL)animated {
+    [self fetchReceipt];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,17 +41,27 @@
 }
 
 - (IBAction)addRecipt:(id)sender {
+    [self performSegueWithIdentifier:@"addReceipt" sender:sender];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"addReceipt"]) {
+        NewReceiptViewController *controller = (NewReceiptViewController *)segue.destinationViewController;
+        controller.managedObjectContext = self.managedObjectContext;
+    }
 }
 
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return self.receiptsArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    ReceiptCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    Receipt *receipt = self.receiptsArray[indexPath.row];
+    cell.receiptLabel.text = receipt.note;
     return cell;
 }
 
@@ -60,10 +75,6 @@
     
     receipt.amount = @50;
     receipt.note = @"Testing";
-
-    //    [info enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-    //        [mObj setValue:obj forKey:key];
-    //    }];
     
     NSError *createError = nil;
     
@@ -71,8 +82,7 @@
         NSLog(@"Unable to save managed object context.");
         NSLog(@"%@, %@", createError, createError.localizedDescription);
     }
-    
-    NSLog(@"%@", receipt);
+
 }
 
 #pragma mark - READ
@@ -80,11 +90,14 @@
 - (void)fetchReceipt {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Receipt" inManagedObjectContext:self.managedObjectContext];
-    fetchRequest.entity = entity;
+    [fetchRequest setEntity:entity];
     
     NSError *readError = nil;
     
-    NSArray *result = [self.managedObjectContext executeFetchRequest:fetchRequest error:&readError];
+    self.receiptsArray = [self.managedObjectContext executeFetchRequest:fetchRequest error:&readError];
+
+    NSLog(@"%@", self.receiptsArray);
+
     
 //    if (result.count > 0) {
 //                NSManagedObject *person = (NSManagedObject *)[result objectAtIndex:0];
@@ -97,12 +110,12 @@
 
 }
 
-#pragma mark - UPDATE
-
+//#pragma mark - UPDATE
+//
 //- (void)updateReceipt {
 //        Receipt *receipt = (Receipt *)[result objectAtIndex:0];
 //    
-//        [person setValue:@30 forKey:@"age"];
+//        [recept setValue:@30 forKey:@"amount"];
 //    
 //        NSError *saveError = nil;
 //    
@@ -111,8 +124,17 @@
 //            NSLog(@"%@, %@", saveError, saveError.localizedDescription);
 //        }
 //}
-
-#pragma mark - DELETE
+//
+//#pragma mark - DELETE
+//
+//    [self.managedObjectContext deleteObject:receipt];
+//
+//    NSError *deleteError = nil;
+//
+//    if (![receipt.managedObjectContext save:&deleteError]) {
+//        NSLog(@"Unable to save managed object context.");
+//        NSLog(@"%@, %@", deleteError, deleteError.localizedDescription);
+//    }
 
 
 @end

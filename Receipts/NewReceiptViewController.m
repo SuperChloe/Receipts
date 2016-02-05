@@ -7,9 +7,11 @@
 //
 
 #import "NewReceiptViewController.h"
-#import "AppDelegate.h"
+#import "Receipt.h"
 
-@interface NewReceiptViewController ()
+
+@interface NewReceiptViewController () <UITextFieldDelegate, UIPickerViewDelegate, UITextViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UITextField *amountField;
 @property (weak, nonatomic) IBOutlet UITextView *descrField;
 @property (weak, nonatomic) IBOutlet UITableView *categoryTable;
@@ -22,7 +24,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,8 +32,31 @@
 }
 
 - (IBAction)donePressed:(id)sender {
-    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication];
+    [self createReceipt];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Core Data
+
+- (void)createReceipt {
+//    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Receipt"
+//                                                         inManagedObjectContext:self.managedObjectContext];
+    Receipt *receipt = [NSEntityDescription insertNewObjectForEntityForName:@"Receipt" inManagedObjectContext:self.managedObjectContext];
+    
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    NSNumber *numberAmount = [formatter numberFromString:self.amountField.text];
+    
+    receipt.amount = numberAmount;
+    receipt.note = self.descrField.text;
+    receipt.timeStamp = self.datePicker.date;
+    
+    NSError *createError = nil;
+    
+    if (![self.managedObjectContext save:&createError]) {
+        NSLog(@"Unable to save managed object context.");
+        NSLog(@"%@, %@", createError, createError.localizedDescription);
+    }
 }
 
 @end
